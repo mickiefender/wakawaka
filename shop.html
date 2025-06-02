@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Wakawakaboyz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/Hero1.jpg" alt="Wakawakaboyz Logo" class="logo">
+                <span class="brand-name">Wakawakaboyz</span>
+            </div>
+           <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link active">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+                <div class="location-selector">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Select Location</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <button class="search-btn">Restaurant Search</button>
+                <div class="cart-icon" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Shop Header -->
+    <section class="shop-header">
+        <div class="container">
+            <h1>Our Menu</h1>
+            <p>Choose from our delicious selection of authentic African dishes</p>
+        </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section class="shop-content">
+        <div class="container">
+            <div class="shop-filters">
+                <button class="filter-btn active" data-category="all">All Items</button>
+                <button class="filter-btn" data-category="jollof">Jollof Rice</button>
+                <button class="filter-btn" data-category="fried">Fried Rice</button>
+                <button class="filter-btn" data-category="waakye">Waakye</button>
+            </div>
+            
+            <div class="products-grid" id="shopProducts">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total">
+                    <strong>Total: GH₵<span id="cartTotal">0.00</span></strong>
+                </div>
+                <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

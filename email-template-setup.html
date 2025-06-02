@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmailJS Template Setup Guide</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .code-block { background: #f4f4f4; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .step { background: #e8f5e8; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .warning { background: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>EmailJS Setup Guide for Wakawakaboyz</h1>
+    
+    <div class="step">
+        <h2>Step 1: Create EmailJS Account</h2>
+        <ol>
+            <li>Go to <a href="https://www.emailjs.com/" target="_blank">EmailJS.com</a></li>
+            <li>Sign up for a free account</li>
+            <li>Verify your email address</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Add Email Service</h2>
+        <ol>
+            <li>Go to "Email Services" in your EmailJS dashboard</li>
+            <li>Click "Add New Service"</li>
+            <li>Choose your email provider (Gmail, Outlook, etc.)</li>
+            <li>Follow the setup instructions</li>
+            <li>Note down your <strong>Service ID</strong></li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Create Email Template</h2>
+        <ol>
+            <li>Go to "Email Templates" in your EmailJS dashboard</li>
+            <li>Click "Create New Template"</li>
+            <li>Use this template content:</li>
+        </ol>
+        
+        <div class="code-block">
+            <strong>Subject:</strong><br>
+            {{subject}}
+            
+            <br><br><strong>Content:</strong><br>
+            <pre>
+🍽️ NEW ORDER RECEIVED - WAKAWAKABOYZ 🍽️
+
+Order Details:
+- Order ID: {{order_id}}
+- Customer: {{customer_name}}
+- Email: {{customer_email}}
+- Phone: {{customer_phone}}
+- Address: {{customer_address}}
+- Total Amount: GH₵{{total_amount}}
+- Payment Status: {{payment_status}}
+- Payment Reference: {{payment_reference}}
+- Order Date: {{order_date}}
+
+Items Summary:
+{{items_summary}}
+
+Financial Summary:
+- Subtotal: GH₵{{subtotal}}
+- Delivery Fee: GH₵{{delivery_fee}}
+- Total: GH₵{{total_amount}}
+
+DETAILED RECEIPT:
+{{{receipt_html}}}
+
+---
+This is an automated message from Wakawakaboyz ordering system.
+            </pre>
+        </div>
+        
+        <ol start="4">
+            <li>Save the template and note down your <strong>Template ID</strong></li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 4: Get Your User ID</h2>
+        <ol>
+            <li>Go to "Account" in your EmailJS dashboard</li>
+            <li>Find your <strong>User ID</strong> (also called Public Key)</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 5: Update Your Code</h2>
+        <p>Replace these values in your script.js file:</p>
+        <div class="code-block">
+            <pre>
+const EMAILJS_CONFIG = {
+  serviceId: 'your_service_id', // Replace with your Service ID
+  templateId: 'your_template_id', // Replace with your Template ID
+  userId: 'your_user_id' // Replace with your User ID
+};
+            </pre>
+        </div>
+    </div>
+
+    <div class="warning">
+        <h3>⚠️ Important Notes:</h3>
+        <ul>
+            <li><strong>Free Plan Limits:</strong> EmailJS free plan allows 200 emails per month</li>
+            <li><strong>Email Delivery:</strong> Test thoroughly before going live</li>
+            <li><strong>Spam Filters:</strong> Make sure your company email doesn't mark these as spam</li>
+            <li><strong>Backup Plan:</strong> Consider upgrading to a paid plan for production use</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>Step 6: Test Your Setup</h2>
+        <ol>
+            <li>Place a test order on your website</li>
+            <li>Check if the email arrives in your company inbox</li>
+            <li>Verify that the receipt formatting looks correct</li>
+            <li>Test with different email providers</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Alternative Email Solutions</h2>
+        <p>If EmailJS doesn't meet your needs, consider:</p>
+        <ul>
+            <li><strong>SendGrid:</strong> More reliable for production</li>
+            <li><strong>Mailgun:</strong> Developer-friendly API</li>
+            <li><strong>Amazon SES:</strong> Cost-effective for high volume</li>
+            <li><strong>Nodemailer:</strong> If you have a backend server</li>
+        </ul>
+    </div>
+</body>
+</html>

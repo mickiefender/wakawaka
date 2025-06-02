@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Debug Test - Wakawakaboyz</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #007bff; }
+        .success { background: #d4edda; border-color: #28a745; }
+        .error { background: #f8d7da; border-color: #dc3545; }
+        .warning { background: #fff3cd; border-color: #ffc107; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        .log { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; max-height: 300px; overflow-y: auto; }
+        input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+    <!-- EmailJS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Email Service -->
+    <script src="email-service.js"></script>
+</head>
+<body>
+    <h1>🔧 Email Debug Test - Wakawakaboyz</h1>
+    
+    <div class="test-section">
+        <h3>📧 EmailJS Configuration Test</h3>
+        <p>Use this page to test and debug your email configuration before going live.</p>
+        
+        <div>
+            <label>Service ID:</label>
+            <input type="text" id="testServiceId" placeholder="service_xxxxxxx" style="width: 200px;">
+        </div>
+        <div>
+            <label>Template ID:</label>
+            <input type="text" id="testTemplateId" placeholder="template_xxxxxxx" style="width: 200px;">
+        </div>
+        <div>
+            <label>Public Key:</label>
+            <input type="text" id="testPublicKey" placeholder="your_public_key_here" style="width: 200px;">
+        </div>
+        <div>
+            <label>Test Email:</label>
+            <input type="email" id="testEmail" placeholder="your-email@example.com" style="width: 200px;">
+        </div>
+        
+        <button onclick="updateConfig()">Update Config</button>
+        <button onclick="testEmailService()">Test Email Service</button>
+        <button onclick="testFullOrder()">Test Full Order Email</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+    
+    <div class="test-section" id="statusSection">
+        <h3>📊 Service Status</h3>
+        <div id="serviceStatus">Checking...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>📝 Debug Log</h3>
+        <div id="debugLog" class="log">Starting debug session...<br></div>
+    </div>
+
+    <script>
+        // Debug logging function
+        function debugLog(message, type = 'info') {
+            const log = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: '#17a2b8',
+                success: '#28a745',
+                error: '#dc3545',
+                warning: '#ffc107'
+            };
+            
+            log.innerHTML += `<span style="color: ${colors[type]};">[${timestamp}] ${message}</span><br>`;
+            log.scrollTop = log.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        // Update configuration
+        function updateConfig() {
+            const serviceId = document.getElementById('testServiceId').value;
+            const templateId = document.getElementById('testTemplateId').value;
+            const publicKey = document.getElementById('testPublicKey').value;
+            
+            if (!serviceId || !templateId || !publicKey) {
+                debugLog('Please fill in all configuration fields', 'error');
+                return;
+            }
+            
+            // Update the email service configuration
+            if (window.emailService) {
+                window.emailService.constructor.prototype.EMAIL_CONFIG = {
+                    serviceId: serviceId,
+                    templateId: templateId,
+                    publicKey: publicKey
+                };
+                
+                // Force re-initialization
+                window.emailService.forceReinitialize();
+                debugLog('Configuration updated successfully', 'success');
+            } else {
+                debugLog('Email service not available', 'error');
+            }
+        }
+
+        // Test email service
+        async function testEmailService() {
+            debugLog('Starting email service test...', 'info');
+            
+            if (!window.emailService) {
+                debugLog('Email service not available', 'error');
+                return;
+            }
+            
+            try {
+                const result = await window.emailService.testConnection();
+                if (result) {
+                    debugLog('Email service test PASSED ✅', 'success');
+                } else {
+                    debugLog('Email service test FAILED ❌', 'error');
+                }
+            } catch (error) {
+                debugLog(`Email service test ERROR: ${error.message}`, 'error');
+            }
+        }
+
+        // Test full order email
+        async function testFullOrder() {
+            debugLog('Starting full order email test...', 'info');
+            
+            const testEmail = document.getElementById('testEmail').value || 'test@example.com';
+            
+            const testOrderData = {
+                orderId: 'TEST_' + Date.now(),
+                orderDate: new Date().toISOString(),
+                paymentStatus: 'paid',
+                paymentReference: 'TEST_REF_' + Date.now(),
+                paymentMethod: 'card',
+                customer: {
+                    name: 'Test Customer',
+                    email: testEmail,
+                    phone: '+233123456789',
+                    address: 'Test Address, Accra, Ghana'
+                },
+                items: [
+                    {
+                        id: 1,
+                        name: 'Test Jollof Rice',
+                        price: 25.00,
+                        quantity: 2
+                    },
+                    {
+                        id: 2,
+                        name: 'Test Fried Rice',
+                        price: 24.00,
+                        quantity: 1
+                    }
+                ],
+                subtotal: 74.00,
+                deliveryFee: 5.00,
+                total: 79.00,
+                notes: 'This is a test order for debugging purposes'
+            };
+            
+            if (!window.emailService) {
+                debugLog('Email service not available', 'error');
+                return;
+            }
+            
+            try {
+                debugLog('Sending test order email...', 'info');
+                const result = await window.emailService.sendOrderReceipt(testOrderData);
+                
+                if (result.success) {
+                    debugLog('Full order email test PASSED ✅', 'success');
+                    debugLog(`Check your email: ${testEmail}`, 'info');
+                } else {
+                    debugLog(`Full order email test FAILED: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                debugLog(`Full order email test ERROR: ${error.message}`, 'error');
+            }
+        }
+
+        // Clear debug log
+        function clearLog() {
+            document.getElementById('debugLog').innerHTML = 'Debug log cleared...<br>';
+        }
+
+        // Check service status
+        function checkServiceStatus() {
+            const statusDiv = document.getElementById('serviceStatus');
+            
+            if (typeof emailjs === 'undefined') {
+                statusDiv.innerHTML = '❌ EmailJS library not loaded';
+                statusDiv.className = 'error';
+                return;
+            }
+            
+            if (!window.emailService) {
+                statusDiv.innerHTML = '❌ Email service not available';
+                statusDiv.className = 'error';
+                return;
+            }
+            
+            if (window.emailService.isConfigured) {
+                statusDiv.innerHTML = '✅ Email service configured and ready';
+                statusDiv.className = 'success';
+            } else if (window.emailService.isInitialized === false) {
+                statusDiv.innerHTML = '❌ Email service configuration error';
+                statusDiv.className = 'error';
+            } else {
+                statusDiv.innerHTML = '⚠️ Email service not configured';
+                statusDiv.className = 'warning';
+            }
+        }
+
+        // Initialize debug page
+        document.addEventListener('DOMContentLoaded', () => {
+            debugLog('Debug page loaded', 'success');
+            debugLog('EmailJS available: ' + (typeof emailjs !== 'undefined'), 'info');
+            debugLog('Email service available: ' + (typeof window.emailService !== 'undefined'), 'info');
+            
+            // Check status periodically
+            setInterval(checkServiceStatus, 2000);
+            checkServiceStatus();
+            
+            // Pre-fill test email if available
+            const testEmailInput = document.getElementById('testEmail');
+            testEmailInput.value = 'your-email@example.com'; // Replace with your actual email
+        });
+    </script>
+</body>
+</html>

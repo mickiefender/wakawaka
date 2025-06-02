@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wakawakaboyz - Order Fresh African Food</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/Hero1.jpg" alt="Wakawakaboyz Logo" class="logo">
+                <span class="brand-name">Wakawakaboyz</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+              
+              
+                <div class="cart-icon" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hero Section -->
+<section class="hero" id="heroSection">
+    <div class="hero-slider">
+        <div class="hero-slide active" style="background-image: url('images/hero4.jpg');">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-slide" style="background-image: url('images/Hero2.jpg');">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-slide" style="background-image: url('images/Hero3.jpg');">
+            <div class="hero-overlay"></div>
+        </div>
+    </div>
+    
+    <div class="hero-navigation">
+        <button class="hero-nav-btn prev" onclick="changeSlide(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="hero-nav-btn next" onclick="changeSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <div class="hero-indicators">
+        <span class="indicator active" onclick="currentSlide(1)"></span>
+        <span class="indicator" onclick="currentSlide(2)"></span>
+        <span class="indicator" onclick="currentSlide(3)"></span>
+    </div>
+    
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text animate-fade-in-up">
+                <p class="hero-subtitle">MAKE YOUR ORDER</p>
+                <h1 class="hero-title">Order Healthy and Fresh African Food Any Time</h1>
+                <p class="hero-description">Experience the authentic taste of West African cuisine with our freshly prepared jollof rice, fried rice, and waakye delivered right to your doorstep.</p>
+                
+               
+        </div>
+    </div>
+</section>
+
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-subtitle">TOP FOODS</p>
+                <h2 class="section-title">Our Categories</h2>
+            </div>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-subtitle">POPULAR DISHES</p>
+                <h2 class="section-title">Featured Products</h2>
+            </div>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wakawakaboyz</h3>
+                    <p>Authentic West African cuisine delivered fresh to your door.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +233 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@wakawakaboyz.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total">
+                    <strong>Total: GH₵<span id="cartTotal">0.00</span></strong>
+                </div>
+                <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

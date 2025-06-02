@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Wakawakaboyz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Paystack Script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="/placeholder.svg?height=40&width=40" alt="Wakawakaboyz Logo" class="logo">
+                <span class="brand-name">Wakawakaboyz</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Checkout -->
+    <section class="checkout">
+        <div class="container">
+            <h1>Checkout</h1>
+            
+            <!-- Payment Status Indicator -->
+            <div id="paymentStatus" class="payment-status" style="display: none;">
+                <div class="status-indicator">
+                    <i class="fas fa-credit-card"></i>
+                    <span id="paymentStatusText">Checking payment service...</span>
+                </div>
+            </div>
+            
+            <!-- WhatsApp Receipt Info -->
+            <div class="whatsapp-info">
+                <div class="info-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <h3>📱 Instant WhatsApp Receipts</h3>
+                        <p>Get instant payment receipts and order confirmations sent directly to your WhatsApp upon successful payment. No delays, no hassles!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checkout-content">
+                <div class="checkout-form">
+                    <h2>Delivery Information</h2>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                            <small>For order confirmation and updates</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+233 123 456 789">
+                            <small>For delivery coordination and WhatsApp receipts (Ghana format: +233XXXXXXXXX)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Delivery Address *</label>
+                            <textarea id="address" name="address" required placeholder="Please provide detailed delivery address including landmarks, house number, and area"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method *</label>
+                            <select id="paymentMethod" name="paymentMethod" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="cash">💰 Cash on Delivery</option>
+                                <option value="momo">📱 Mobile Money (MTN, Vodafone, AirtelTigo)</option>
+                                <option value="card">💳 Credit/Debit Card</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Special Instructions (Optional)</label>
+                            <textarea id="notes" name="notes" placeholder="Any special delivery instructions, food preferences, or dietary requirements"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="place-order-btn">
+                            <i class="fas fa-check-circle"></i> Place Order
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div id="checkoutItems">
+                        <!-- Checkout items will be populated by JavaScript -->
+                    </div>
+                    <div class="order-total">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span>GH₵<span id="subtotal">0.00</span></span>
+                        </div>
+                        <div class="total-row">
+                            <span>Delivery Fee:</span>
+                            <span>GH₵<span id="deliveryFee">5.00</span></span>
+                        </div>
+                        <div class="total-row final-total">
+                            <span>Total:</span>
+                            <span>GH₵<span id="finalTotal">0.00</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-info">
+                        <h3>Payment Information</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Cash on Delivery</span>
+                            </div>
+                            <div class="payment-method">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile Money (Paystack)</span>
+                            </div>
+                            <div class="payment-method">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Credit/Debit Card (Paystack)</span>
+                            </div>
+                        </div>
+                        <!-- Payment description will be added here dynamically -->
+                    </div>
+                    
+                    <div class="whatsapp-notification">
+                        <h3>📱 Automated Receipt System</h3>
+                        <p>Our advanced system automatically sends detailed receipts to both you and our team instantly upon payment completion.</p>
+                        <div class="whatsapp-features">
+                            <div class="feature">
+                                <i class="fas fa-bolt"></i>
+                                <span>Instant delivery</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-receipt"></i>
+                                <span>Detailed receipts</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure & reliable</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-redo"></i>
+                                <span>Auto-retry on failure</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-info">
+                        <h3>🔒 Secure Payment</h3>
+                        <p>All online payments are processed securely through Paystack's encrypted payment gateway with instant receipt delivery.</p>
+                        <div class="security-badges">
+                            <div class="badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>SSL Encrypted</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-lock"></i>
+                                <span>PCI Compliant</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp Receipts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful - Wakawakaboyz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="images/Hero1.jpg" alt="Wakawakaboyz Logo" class="logo">
+                <span class="brand-name">Wakawakaboyz</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Success Page -->
+    <section class="order-success">
+        <div class="container">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1>Order Placed Successfully!</h1>
+                <p class="success-message">Thank you for your order. We've received your request and will process it shortly.</p>
+                
+                <div class="order-details" id="orderDetails">
+                    <!-- Order details will be populated by JavaScript -->
+                </div>
+                
+                <div class="next-steps">
+                    <h3>What happens next?</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Confirmation</h4>
+                                <p>You'll receive an email confirmation shortly</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <i class="fas fa-utensils"></i>
+                            <div>
+                                <h4>Preparation</h4>
+                                <p>Our chefs will start preparing your delicious meal</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <i class="fas fa-motorcycle"></i>
+                            <div>
+                                <h4>Delivery</h4>
+                                <p>Your food will be delivered within 30-45 minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                    <a href="shop.html" class="btn btn-secondary">
+                        <i class="fas fa-shopping-bag"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Display order details on success page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            
+            if (orderId) {
+                const orderDetails = document.getElementById('orderDetails');
+                orderDetails.innerHTML = `
+                    <div class="order-info-card">
+                        <h3>Order Information</h3>
+                        <p><strong>Order ID:</strong> ${orderId}</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        <p><strong>Status:</strong> <span class="status-confirmed">Confirmed</span></p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
